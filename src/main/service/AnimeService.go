@@ -22,3 +22,17 @@ func AddAnime(anime model.Anime) model.HttpStatus {
 
 	return model.HttpStatus{Code: 200, Message: "Added anime."}
 }
+
+func DeleteAnime(animeTitle string) model.HttpStatus {
+	db := util.InitDb()
+	_, err := db.Exec("DELETE FROM anime WHERE title=$1;", animeTitle)
+
+	if err != nil {
+		log.Print("\nQuery exec failed.")
+		log.Print(err)
+		return model.HttpStatus{Code: 500, Message: "Failed to add anime: Query exec failed."}
+	} else {
+		log.Print(animeTitle + " deleted successfully.")
+		return model.HttpStatus{Code: 200, Message: "Deletion success."}
+	}
+}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"firstWebService/src/main/model"
 	"firstWebService/src/main/service"
-	"fmt"
 	"net/http"
 )
 
@@ -12,8 +11,6 @@ func AddAnime(w http.ResponseWriter, r *http.Request) {
 
 	animeName := r.FormValue("name")
 	animeAuthor := r.FormValue("author")
-
-	fmt.Println("name: " + animeName + " auth: " + animeAuthor)
 
 	var response = model.HttpStatus{}
 	if animeName == "" || animeAuthor == "" {
@@ -29,4 +26,18 @@ func AddAnime(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(response)
 
+}
+
+func DeleteAnime(w http.ResponseWriter, r *http.Request) {
+
+	animeName := r.FormValue("name")
+
+	var response = model.HttpStatus{}
+	if animeName == "" {
+		response = model.HttpStatus{Code: 400, Message: "Invalid input."}
+	} else {
+		response = service.DeleteAnime(animeName)
+	}
+
+	json.NewEncoder(w).Encode(response)
 }

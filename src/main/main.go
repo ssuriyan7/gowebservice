@@ -12,9 +12,10 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/anime/", endpoint.AddAnime).Methods("POST")
+	router.HandleFunc("/anime/add", endpoint.AddAnime).Methods("POST")
+	router.HandleFunc("/anime/delete", endpoint.DeleteAnime).Methods("DELETE")
 
 	fmt.Println("Starting server at 8080.")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Print(http.ListenAndServe(":8080", router))
 
 }
